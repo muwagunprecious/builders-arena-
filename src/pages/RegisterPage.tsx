@@ -4,11 +4,15 @@ import { Link } from 'react-router-dom';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { CustomCursor } from '../components/CustomCursor';
-import { Zap, Plus, Trash2, ArrowRight, ArrowLeft, CheckCircle2 } from 'lucide-react';
+import { Zap, Plus, Trash2, ArrowRight, ArrowLeft, CheckCircle2, Check, AlertTriangle } from 'lucide-react';
 import { RegistrationFormData } from '../types';
 
 export const RegisterPage: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [applicationRecord, setApplicationRecord] = useState<any>(null);
+
   const [formData, setFormData] = useState<RegistrationFormData>({
     teamName: '',
     track: 'fintech',
@@ -56,10 +60,43 @@ export const RegisterPage: React.FC = () => {
     setFormData({ ...formData, members: updated });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          teamName: formData.teamName,
+          track: formData.track,
+          teamLeadName: formData.teamLeadName,
+          teamLeadEmail: formData.teamLeadEmail,
+          teamLeadPhone: formData.teamLeadPhone,
+          matricNumber: formData.department,
+          departmentLevel: formData.university,
+          members: formData.members,
+          githubPortfolio: formData.githubPortfolio,
+          problemStatement: `${formData.projectIdea}\n\nWhy selected: ${formData.whySelected}`,
+        }),
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to submit registration. Please try again.');
+      }
+
+      setApplicationRecord(data.application);
+      setSubmitted(true);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (err: any) {
+      console.error('Registration submission error:', err);
+      setError(err.message || 'Network error occurred while submitting.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -94,7 +131,7 @@ export const RegisterPage: React.FC = () => {
             </h1>
           </div>
 
-          <p className="font-sans font-bold text-sm sm:text-base text-white bg-black px-6 py-2.5 rounded-md border-2 border-black shadow-[4px_4px_0px_#000000]">
+          <p className="font-sans font-medium text-sm sm:text-base text-white bg-black px-6 py-2.5 rounded-md border-2 border-black shadow-[4px_4px_0px_#000000]">
             Submit your team details and solution proposal for screening into the top 15 finalist cohort.
           </p>
         </div>
@@ -106,40 +143,44 @@ export const RegisterPage: React.FC = () => {
             animate={{ opacity: 1, scale: 1 }}
             className="bg-white text-black border-3 border-black rounded-md p-8 sm:p-12 text-center space-y-6 shadow-[12px_12px_0px_#000000]"
           >
-            <div className="w-20 h-20 rounded bg-[#00D9FF] border-3 border-black text-black flex items-center justify-center mx-auto text-4xl font-black shadow-[4px_4px_0px_#000000]">
-              ✓
+            <div className="w-20 h-20 rounded bg-[#00D9FF] border-3 border-black text-black flex items-center justify-center mx-auto shadow-[4px_4px_0px_#000000]">
+              <Check className="w-10 h-10 text-black stroke-[3]" />
             </div>
 
             <h2 className="font-display font-black text-3xl sm:text-5xl uppercase tracking-tight text-black">
               APPLICATION RECEIVED!
             </h2>
 
-            <p className="font-sans font-bold text-base sm:text-lg text-gray-900 max-w-xl mx-auto leading-relaxed">
-              Thank you for applying to <strong className="text-black bg-[#00D9FF] px-1.5 py-0.5 rounded border border-black">BUILDERS ARENA 2026</strong>. Your team <strong className="text-black underline">{formData.teamName || 'Your Team'}</strong> is registered under the <strong className="text-black uppercase font-black">{formData.track}</strong> track.
+            <p className="font-sans font-normal text-base sm:text-lg text-gray-800 max-w-xl mx-auto leading-relaxed">
+              Thank you for applying to <strong className="text-black bg-[#00D9FF] px-1.5 py-0.5 rounded border border-black font-semibold">BUILDERS ARENA 2026</strong>. Your team <strong className="text-black underline font-semibold">{formData.teamName || 'Your Team'}</strong> is registered under the <strong className="text-black uppercase font-semibold">{formData.track}</strong> track.
             </p>
 
             {/* RECEIPT SLIP */}
             <div className="p-6 rounded bg-gray-50 border-3 border-black text-left max-w-lg mx-auto font-mono text-xs space-y-3 shadow-[6px_6px_0px_#000000]">
               <div className="flex justify-between border-b-2 border-black pb-2">
-                <span className="text-gray-600 font-bold">APPLICATION ID:</span>
-                <span className="text-black font-black bg-[#00D9FF] px-2 py-0.5 rounded border border-black">BA2026-APP-{(Math.random() * 8999 + 1000).toFixed(0)}</span>
+                <span className="text-gray-600 font-medium">APPLICATION ID:</span>
+                <span className="text-black font-bold bg-[#00D9FF] px-2 py-0.5 rounded border border-black">
+                  {applicationRecord?.application_id || 'BA2026-APP-PROCESSED'}
+                </span>
               </div>
               <div className="flex justify-between border-b-2 border-black pb-2">
-                <span className="text-gray-600 font-bold">TEAM LEAD:</span>
-                <span className="text-black font-bold">{formData.teamLeadName}</span>
+                <span className="text-gray-600 font-medium">TEAM LEAD:</span>
+                <span className="text-black font-semibold">{formData.teamLeadName}</span>
               </div>
               <div className="flex justify-between border-b-2 border-black pb-2">
-                <span className="text-gray-600 font-bold">TOTAL BUILDERS:</span>
-                <span className="text-black font-bold">{formData.members.length + 1} Members</span>
+                <span className="text-gray-600 font-medium">TOTAL BUILDERS:</span>
+                <span className="text-black font-semibold">{formData.members.length + 1} Members</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600 font-bold">SCREENING STATUS:</span>
-                <span className="bg-black text-[#00D9FF] px-2 py-0.5 rounded font-black">UNDER REVIEW</span>
+                <span className="text-gray-600 font-medium">SCREENING STATUS:</span>
+                <span className="bg-black text-[#00D9FF] px-2 py-0.5 rounded font-bold uppercase">
+                  {applicationRecord?.status ? applicationRecord.status.replace('_', ' ') : 'UNDER REVIEW'}
+                </span>
               </div>
             </div>
 
-            <p className="text-xs text-gray-700 font-sans font-semibold">
-              Confirmation and screening updates will be sent to <strong className="text-black underline">{formData.teamLeadEmail}</strong>.
+            <p className="text-xs text-gray-700 font-sans font-normal">
+              Confirmation and screening updates will be sent to <strong className="text-black underline font-semibold">{formData.teamLeadEmail}</strong>.
             </p>
 
             <div className="pt-4 flex flex-col sm:flex-row gap-4 justify-center">
@@ -153,13 +194,19 @@ export const RegisterPage: React.FC = () => {
                 onClick={() => setSubmitted(false)}
                 className="neo-btn-secondary px-8 py-3.5 text-xs font-mono uppercase font-bold"
               >
-                EDIT REGISTRATION
+                SUBMIT ANOTHER APPLICATION
               </button>
             </div>
           </motion.div>
         ) : (
           /* NEO-BRUTALIST REGISTRATION FORM */
           <form onSubmit={handleSubmit} className="space-y-8">
+            {error && (
+              <div className="p-4 rounded bg-red-100 border-3 border-black text-red-800 font-mono text-xs shadow-[4px_4px_0px_#000000] flex items-center gap-2">
+                <AlertTriangle className="w-4 h-4 text-red-700 shrink-0" />
+                <span>{error}</span>
+              </div>
+            )}
             
             {/* Step 1: Team & Track Information */}
             <div className="bg-white text-black border-3 border-black rounded-md p-6 sm:p-8 space-y-6 shadow-[8px_8px_0px_#000000]">
@@ -178,7 +225,7 @@ export const RegisterPage: React.FC = () => {
                     placeholder="e.g. AgriPulse OOU"
                     value={formData.teamName}
                     onChange={(e) => setFormData({ ...formData, teamName: e.target.value })}
-                    className="w-full bg-white border-2 border-black rounded p-3 text-black font-sans text-sm font-semibold focus:shadow-[4px_4px_0px_#000000] focus:outline-none transition-all"
+                    className="w-full bg-white border-2 border-black rounded p-3 text-black font-sans text-sm font-normal focus:shadow-[4px_4px_0px_#000000] focus:outline-none transition-all"
                   />
                 </div>
 
@@ -189,12 +236,12 @@ export const RegisterPage: React.FC = () => {
                   <select
                     value={formData.track}
                     onChange={(e) => setFormData({ ...formData, track: e.target.value })}
-                    className="w-full bg-white border-2 border-black rounded p-3 text-black font-mono text-sm font-bold focus:shadow-[4px_4px_0px_#000000] focus:outline-none transition-all"
+                    className="w-full bg-white border-2 border-black rounded p-3 text-black font-mono text-sm font-normal focus:shadow-[4px_4px_0px_#000000] focus:outline-none transition-all"
                   >
-                    <option value="fintech">💳 FINTECH TRACK</option>
-                    <option value="agritech">🌾 AGRICTECH TRACK</option>
-                    <option value="web3">⛓️ WEB3 TRACK</option>
-                    <option value="ai">🧠 AI & SOFTWARE TRACK</option>
+                    <option value="fintech">FINTECH TRACK</option>
+                    <option value="agritech">AGRICTECH TRACK</option>
+                    <option value="web3">WEB3 TRACK</option>
+                    <option value="ai">AI & SOFTWARE TRACK</option>
                   </select>
                 </div>
               </div>
@@ -332,14 +379,14 @@ export const RegisterPage: React.FC = () => {
                         placeholder="Member Email"
                         value={member.email}
                         onChange={(e) => handleMemberChange(idx, 'email', e.target.value)}
-                        className="w-full bg-white border-2 border-black rounded p-2.5 text-black font-sans text-xs font-semibold focus:shadow-[3px_3px_0px_#000000] focus:outline-none"
+                        className="w-full bg-white border-2 border-black rounded p-2.5 text-black font-sans text-xs font-normal focus:shadow-[3px_3px_0px_#000000] focus:outline-none"
                       />
                     </div>
                     <div>
                       <select
                         value={member.role}
                         onChange={(e) => handleMemberChange(idx, 'role', e.target.value)}
-                        className="w-full bg-white border-2 border-black rounded p-2.5 text-black font-mono text-xs font-bold focus:shadow-[3px_3px_0px_#000000] focus:outline-none"
+                        className="w-full bg-white border-2 border-black rounded p-2.5 text-black font-mono text-xs font-normal focus:shadow-[3px_3px_0px_#000000] focus:outline-none"
                       >
                         <option value="Frontend Developer">Frontend Developer</option>
                         <option value="Backend Developer">Backend Developer</option>
@@ -371,7 +418,7 @@ export const RegisterPage: React.FC = () => {
                     placeholder="https://github.com/your-username-or-team"
                     value={formData.githubPortfolio}
                     onChange={(e) => setFormData({ ...formData, githubPortfolio: e.target.value })}
-                    className="w-full bg-white border-2 border-black rounded p-3 text-black font-mono text-sm font-bold focus:shadow-[4px_4px_0px_#000000] focus:outline-none transition-all"
+                    className="w-full bg-white border-2 border-black rounded p-3 text-black font-mono text-sm font-normal focus:shadow-[4px_4px_0px_#000000] focus:outline-none transition-all"
                   />
                 </div>
 
@@ -408,10 +455,13 @@ export const RegisterPage: React.FC = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full neo-btn-primary py-5 px-8 text-center text-sm sm:text-base font-display uppercase tracking-wider flex items-center justify-center gap-2"
+              disabled={loading}
+              className={`w-full neo-btn-primary py-5 px-8 text-center text-sm sm:text-base font-display uppercase tracking-wider flex items-center justify-center gap-2 ${
+                loading ? 'opacity-70 cursor-not-allowed' : ''
+              }`}
             >
               <Zap className="w-5 h-5 text-black fill-black" />
-              <span>SUBMIT HACKATHON APPLICATION</span>
+              <span>{loading ? 'SUBMITTING TO NEON DATABASE...' : 'SUBMIT HACKATHON APPLICATION'}</span>
               <ArrowRight className="w-5 h-5" />
             </button>
           </form>

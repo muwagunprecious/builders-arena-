@@ -22,8 +22,8 @@ export const FinalCTASection: React.FC = () => {
         </motion.div>
 
         <div className="bg-black text-white border-3 border-black p-6 rounded-md shadow-[6px_6px_0px_#000000] max-w-2xl">
-          <p className="text-lg sm:text-2xl font-sans font-bold leading-relaxed">
-            The next generation of Nigerian technology isn't waiting to be discovered. <strong className="text-[#00D9FF] underline font-black">They're building.</strong>
+          <p className="text-lg sm:text-2xl font-sans font-medium leading-relaxed">
+            The next generation of Nigerian technology isn't waiting to be discovered. <strong className="text-[#00D9FF] underline font-bold">They're building.</strong>
           </p>
         </div>
 

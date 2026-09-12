@@ -22,7 +22,7 @@ export const TracksSection: React.FC = () => {
               FOUR WAYS TO BUILD
             </h2>
           </div>
-          <p className="font-sans font-bold text-lg text-white bg-black px-6 py-2 rounded-md border-2 border-black shadow-[4px_4px_0px_#000000]">
+          <p className="font-sans font-medium text-lg text-white bg-black px-6 py-2 rounded-md border-2 border-black shadow-[4px_4px_0px_#000000]">
             Choose your challenge vertical and turn ambitious technical ideas into production software.
           </p>
         </div>
@@ -49,8 +49,8 @@ export const TracksSection: React.FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
 
                 <div className="absolute top-4 left-4 flex items-center gap-2">
-                  <div className="w-12 h-12 rounded bg-[#00D9FF] text-black border-2 border-black flex items-center justify-center text-2xl shadow-[3px_3px_0px_#000000]">
-                    {track.emoji}
+                  <div className="w-12 h-12 rounded bg-[#00D9FF] text-black border-2 border-black flex items-center justify-center shadow-[3px_3px_0px_#000000]">
+                    <track.icon className="w-6 h-6 text-black stroke-[2.5]" />
                   </div>
                   <span className="neo-tag bg-black text-white">
                     TRACK 0{idx + 1}
@@ -65,7 +65,7 @@ export const TracksSection: React.FC = () => {
               {/* CARD CONTENT */}
               <div className="p-6 sm:p-8 space-y-6 flex-1 flex flex-col justify-between">
                 <div>
-                  <p className="font-sans text-base font-bold text-black leading-relaxed mb-6">
+                  <p className="font-sans text-base font-normal text-gray-800 leading-relaxed mb-6">
                     {track.shortDesc}
                   </p>
 

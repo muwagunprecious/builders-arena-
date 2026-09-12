@@ -66,7 +66,7 @@ export const SponsorSection: React.FC = () => {
                 <h3 className="font-display font-black text-lg text-black uppercase">
                   {pillar.title}
                 </h3>
-                <p className="text-gray-900 text-xs sm:text-sm font-sans font-bold leading-relaxed">
+                <p className="text-gray-800 text-xs sm:text-sm font-sans font-normal leading-relaxed">
                   {pillar.desc}
                 </p>
               </motion.div>
@@ -113,7 +113,7 @@ export const SponsorSection: React.FC = () => {
                     {tier.price}
                   </div>
                   {tier.subtitle && (
-                    <p className="text-xs font-mono font-bold text-black mt-2">
+                    <p className="text-xs font-mono font-normal text-black mt-2">
                       {tier.subtitle}
                     </p>
                   )}
@@ -121,7 +121,7 @@ export const SponsorSection: React.FC = () => {
 
                 <ul className="space-y-3 mb-8">
                   {tier.benefits.map((benefit, bIdx) => (
-                    <li key={bIdx} className="flex items-start gap-2 text-xs text-black font-sans font-bold leading-snug">
+                    <li key={bIdx} className="flex items-start gap-2 text-xs text-black font-sans font-medium leading-snug">
                       <Check className="w-4 h-4 text-black shrink-0 mt-0.5 stroke-[3]" />
                       <span>{benefit}</span>
                     </li>

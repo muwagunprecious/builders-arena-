@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, Globe } from 'lucide-react';
+import { BookOpen, Globe, Check } from 'lucide-react';
 
 export const BigQuestionSection: React.FC = () => {
   const classroomItems = [
@@ -36,8 +36,8 @@ export const BigQuestionSection: React.FC = () => {
             </h2>
           </div>
 
-          <div className="bg-black text-white border-2 border-black px-6 py-3 rounded-md shadow-[4px_4px_0px_#000000] font-sans font-bold text-lg sm:text-xl">
-            Students are learning technology. <span className="text-[#00D9FF] underline font-extrabold">But are they building with it?</span>
+          <div className="bg-black text-white border-2 border-black px-6 py-3 rounded-md shadow-[4px_4px_0px_#000000] font-sans font-medium text-lg sm:text-xl">
+            Students are learning technology. <span className="text-[#00D9FF] underline font-semibold">But are they building with it?</span>
           </div>
         </div>
 
@@ -75,7 +75,7 @@ export const BigQuestionSection: React.FC = () => {
               </div>
             </div>
 
-            <div className="p-8 pt-0 space-y-3 font-mono text-xs sm:text-sm font-bold">
+            <div className="p-8 pt-0 space-y-3 font-mono text-xs sm:text-sm font-medium">
               {classroomItems.map((item, idx) => (
                 <div
                   key={idx}
@@ -123,9 +123,11 @@ export const BigQuestionSection: React.FC = () => {
               {realWorldItems.map((item, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center gap-2.5 p-3.5 rounded bg-white text-black border-2 border-black font-mono text-xs font-black shadow-[3px_3px_0px_#000000]"
+                  className="flex items-center gap-2.5 p-3.5 rounded bg-white text-black border-2 border-black font-mono text-xs font-semibold shadow-[3px_3px_0px_#000000]"
                 >
-                  <span className="bg-black text-[#00D9FF] w-5 h-5 rounded-full flex items-center justify-center text-[10px]">✓</span>
+                  <span className="bg-black text-[#00D9FF] w-5 h-5 rounded-full flex items-center justify-center">
+                    <Check className="w-3 h-3 text-[#00D9FF] stroke-[3]" />
+                  </span>
                   <span>{item}</span>
                 </div>
               ))}
@@ -140,8 +142,8 @@ export const BigQuestionSection: React.FC = () => {
             alt="Developers Background"
             className="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none"
           />
-          <p className="relative z-10 font-display text-xl sm:text-3xl font-extrabold leading-relaxed uppercase">
-            "Builders Arena exists to <span className="text-[#00D9FF] underline font-black">close the gap</span> between learning technology and using technology to solve real problems."
+          <p className="relative z-10 font-display text-xl sm:text-3xl font-bold leading-relaxed uppercase">
+            "Builders Arena exists to <span className="text-[#00D9FF] underline font-bold">close the gap</span> between learning technology and using technology to solve real problems."
           </p>
         </div>
       </div>

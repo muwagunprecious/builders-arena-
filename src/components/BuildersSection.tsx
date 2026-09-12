@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { BUILDER_PROFILES } from '../data/hackathonData';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, Zap } from 'lucide-react';
 
 export const BuildersSection: React.FC = () => {
   const [filter, setFilter] = useState<string>('all');
@@ -27,7 +27,7 @@ export const BuildersSection: React.FC = () => {
             </h2>
           </div>
 
-          <p className="font-sans font-bold text-sm sm:text-base text-white bg-black px-6 py-2.5 rounded-md border-2 border-black shadow-[4px_4px_0px_#000000]">
+          <p className="font-sans font-medium text-sm sm:text-base text-white bg-black px-6 py-2.5 rounded-md border-2 border-black shadow-[4px_4px_0px_#000000]">
             The hackathon leads, organizers, judges, and technical mentors building the arena.
           </p>
         </div>
@@ -44,7 +44,14 @@ export const BuildersSection: React.FC = () => {
                   : 'bg-white text-black shadow-[4px_4px_0px_#000000] hover:bg-black hover:text-white'
               }`}
             >
-              {cat === 'all' ? '⚡ ALL PROFILES' : cat}
+              {cat === 'all' ? (
+                <span className="inline-flex items-center gap-1.5">
+                  <Zap className="w-3.5 h-3.5 fill-black text-black" />
+                  <span>ALL PROFILES</span>
+                </span>
+              ) : (
+                cat
+              )}
             </button>
           ))}
         </div>
@@ -114,14 +121,14 @@ export const BuildersSection: React.FC = () => {
                   {builder.role}
                 </p>
                 {builder.organization && (
-                  <p className="text-[11px] font-sans font-bold text-gray-700 mt-1">
+                  <p className="text-[11px] font-sans font-normal text-gray-700 mt-1">
                     {builder.organization}
                   </p>
                 )}
               </div>
 
               {/* Bio */}
-              <p className="text-gray-900 text-xs font-sans font-bold leading-relaxed line-clamp-3 mb-4 px-2">
+              <p className="text-gray-800 text-xs font-sans font-normal leading-relaxed line-clamp-3 mb-4 px-2">
                 "{builder.bio}"
               </p>
 

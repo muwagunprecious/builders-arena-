@@ -28,7 +28,7 @@ export const FinalistModelSection: React.FC = () => {
             </h2>
           </div>
 
-          <p className="font-sans font-bold text-sm sm:text-base text-white bg-black px-6 py-2.5 rounded-md border-2 border-black shadow-[4px_4px_0px_#000000]">
+          <p className="font-sans font-medium text-sm sm:text-base text-white bg-black px-6 py-2.5 rounded-md border-2 border-black shadow-[4px_4px_0px_#000000]">
             A tight, highly competitive structure designed for maximum mentor focus, deep technical execution, and quality product outcomes.
           </p>
         </div>

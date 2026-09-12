@@ -53,7 +53,7 @@ export const BuildForNigeriaSection: React.FC = () => {
                 <span className="neo-tag bg-black text-white text-[10px]">
                   CHALLENGE #{idx + 1}
                 </span>
-                <p className="font-sans text-base sm:text-lg font-bold text-black leading-snug">
+                <p className="font-sans text-base sm:text-lg font-medium text-black leading-snug">
                   "{problem}"
                 </p>
               </div>

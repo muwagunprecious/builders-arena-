@@ -22,7 +22,7 @@ export const InKindPartnersSection: React.FC = () => {
             </h2>
           </div>
 
-          <p className="font-sans font-bold text-sm sm:text-base text-white bg-black px-6 py-2.5 rounded-md border-2 border-black shadow-[4px_4px_0px_#000000]">
+          <p className="font-sans font-medium text-sm sm:text-base text-white bg-black px-6 py-2.5 rounded-md border-2 border-black shadow-[4px_4px_0px_#000000]">
             Essential operational resources empowering student teams to build seamlessly without friction.
           </p>
         </div>
@@ -38,13 +38,13 @@ export const InKindPartnersSection: React.FC = () => {
               transition={{ duration: 0.4, delay: idx * 0.1 }}
               className="bg-white text-black border-3 border-black rounded-md p-6 relative shadow-[6px_6px_0px_#000000] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0px_#000000] transition-all"
             >
-              <div className="text-4xl mb-4 p-2 bg-[#00D9FF] rounded border-2 border-black inline-block shadow-[2px_2px_0px_#000000]">
-                {partner.icon}
+              <div className="mb-4 p-2.5 bg-[#00D9FF] rounded border-2 border-black inline-flex items-center justify-center shadow-[2px_2px_0px_#000000]">
+                <partner.icon className="w-7 h-7 text-black stroke-[2.5]" />
               </div>
               <h3 className="font-display font-black text-lg text-black uppercase mb-2">
                 {partner.title}
               </h3>
-              <p className="text-gray-900 text-xs sm:text-sm font-sans font-bold leading-relaxed">
+              <p className="text-gray-800 text-xs sm:text-sm font-sans font-normal leading-relaxed">
                 {partner.detail}
               </p>
             </motion.div>
@@ -57,7 +57,7 @@ export const InKindPartnersSection: React.FC = () => {
             <h4 className="font-display font-black text-xl uppercase text-[#00D9FF]">
               Have something else to contribute?
             </h4>
-            <p className="text-gray-200 text-xs sm:text-sm font-sans font-bold">
+            <p className="text-gray-300 text-xs sm:text-sm font-sans font-normal">
               Custom hardware, cloud credits, API access or catering partnerships welcome.
             </p>
           </div>

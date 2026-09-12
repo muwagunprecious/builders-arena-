@@ -23,7 +23,7 @@ export const TimelineSection: React.FC = () => {
             </h2>
           </div>
 
-          <p className="font-sans font-bold text-sm sm:text-base text-white bg-black px-6 py-2.5 rounded-md border-2 border-black shadow-[4px_4px_0px_#000000]">
+          <p className="font-sans font-medium text-sm sm:text-base text-white bg-black px-6 py-2.5 rounded-md border-2 border-black shadow-[4px_4px_0px_#000000]">
             From initial screening to live demo pitches, experience a structured high-octane build journey.
           </p>
         </div>
@@ -112,7 +112,7 @@ export const TimelineSection: React.FC = () => {
                       <CheckCircle2 className="w-4 h-4 text-black" />
                       {act.title}
                     </h5>
-                    <p className="text-gray-900 text-xs leading-relaxed font-sans font-semibold">
+                    <p className="text-gray-800 text-xs leading-relaxed font-sans font-normal">
                       {act.description}
                     </p>
                   </div>

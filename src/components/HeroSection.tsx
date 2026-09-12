@@ -1,14 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { MapPin, Calendar, ArrowRight, Zap } from 'lucide-react';
-import { HERO_STATS } from '../data/hackathonData';
+import { MapPin, Calendar, ArrowRight, Zap, Star } from 'lucide-react';
 
 export const HeroSection: React.FC = () => {
   return (
     <section className="relative min-h-screen pt-36 pb-28 overflow-hidden bg-neo-hero">
       
-      {/* 🖼️ OFFICIAL OOU AUDITORIUM HERO BACKGROUND IMAGE (Spread Full Width & Height) */}
+      {/* OFFICIAL OOU AUDITORIUM HERO BACKGROUND IMAGE (Spread Full Width & Height) */}
       <img
         src="/hero-auditorium-bg.png"
         alt="OOU Auditorium Venue Full Background"
@@ -30,8 +29,9 @@ export const HeroSection: React.FC = () => {
       <div className="absolute top-24 right-8 sm:right-20 w-24 h-24 sm:w-32 sm:h-32 border-3 border-black bg-white/30 shadow-[6px_6px_0px_#000000] rounded-none rotate-[8deg] pointer-events-none hidden md:block" />
 
       {/* 3. Bottom-Left Flat Pink Badge Anchor */}
-      <div className="absolute bottom-32 left-6 sm:left-16 bg-[#F451D7] border-3 border-black shadow-[4px_4px_0px_#000000] px-4 py-2 rounded-md font-mono text-xs font-black text-black uppercase rotate-[-4deg] z-20 pointer-events-none hidden md:block">
-        ★ OOU HACKATHON
+      <div className="absolute bottom-32 left-6 sm:left-16 bg-[#F451D7] border-3 border-black shadow-[4px_4px_0px_#000000] px-4 py-2 rounded-md font-mono text-xs font-black text-black uppercase rotate-[-4deg] z-20 pointer-events-none hidden md:flex items-center gap-1.5">
+        <Star className="w-3.5 h-3.5 fill-black text-black" />
+        <span>OOU HACKATHON</span>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full flex flex-col items-center">
@@ -101,7 +101,7 @@ export const HeroSection: React.FC = () => {
 
         {/* Body Copy High-Contrast Box */}
         <div className="bg-white border-3 border-black rounded-md p-6 shadow-[6px_6px_0px_#000000] text-black max-w-3xl space-y-3 mb-8 text-center">
-          <p className="font-sans font-bold text-base sm:text-lg leading-relaxed">
+          <p className="font-sans font-normal text-base sm:text-lg leading-relaxed text-gray-900">
             Code. Create. Solve. A 48-hour university hackathon where student builders turn real Nigerian problems into working technology.
           </p>
 
@@ -118,7 +118,7 @@ export const HeroSection: React.FC = () => {
         </div>
 
         {/* CTAS (RECTANGULAR, SOLID COLORS, HARD SHADOWS) */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-2xl mb-14">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-2xl">
           <Link
             to="/sponsor-apply"
             className="neo-btn-primary px-7 py-4 text-center text-xs sm:text-sm font-display uppercase tracking-wider flex items-center justify-center gap-2"
@@ -136,48 +136,6 @@ export const HeroSection: React.FC = () => {
             <Zap className="w-4 h-4 text-black fill-black" />
             <span>REGISTER YOUR TEAM</span>
           </Link>
-        </div>
-
-        {/* 1. METRICS BOXES */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-5xl mb-8">
-          {HERO_STATS.map((stat, idx) => (
-            <div
-              key={idx}
-              className="bg-white text-black border-3 border-black p-5 rounded-md shadow-[5px_5px_0px_#000000] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0px_#000000] transition-all text-left"
-              data-cursor={stat.label}
-            >
-              <span className="font-mono text-[10px] font-bold text-gray-500 block uppercase">
-                METRIC 0{idx + 1}
-              </span>
-              <div className="font-display font-extrabold text-3xl sm:text-5xl text-black my-1">
-                {stat.value}
-              </div>
-              <div className="font-mono text-[11px] font-black tracking-wider text-black uppercase">
-                {stat.label}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* 2. TRACKS BANNER */}
-        <div className="bg-black text-white border-3 border-black p-4 rounded-md shadow-[6px_6px_0px_#000000] overflow-hidden w-full max-w-5xl">
-          <div className="flex flex-wrap items-center justify-around gap-4 text-xs font-mono font-black tracking-widest uppercase">
-            <span className="text-[#00D9FF] flex items-center gap-1.5">
-              <span>💳</span> FINTECH
-            </span>
-            <span className="text-white">|</span>
-            <span className="text-[#FF9F00] flex items-center gap-1.5">
-              <span>🌾</span> AGRICTECH
-            </span>
-            <span className="text-white">|</span>
-            <span className="text-white flex items-center gap-1.5">
-              <span>⛓️</span> WEB3
-            </span>
-            <span className="text-white">|</span>
-            <span className="text-[#F451D7] flex items-center gap-1.5">
-              <span>🧠</span> AI & SOFTWARE
-            </span>
-          </div>
         </div>
 
       </div>

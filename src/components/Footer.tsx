@@ -22,8 +22,8 @@ export const Footer: React.FC = () => {
               Code. Create. Solve.
             </p>
 
-            <p className="text-gray-300 text-xs sm:text-sm font-sans font-semibold max-w-sm leading-relaxed">
-              Organized by <strong className="text-white underline">OOU Tech Community (OTC)</strong>. Empowering the next generation of university builders and problem solvers across Nigeria.
+            <p className="text-gray-300 text-xs sm:text-sm font-sans font-normal max-w-sm leading-relaxed">
+              Organized by <strong className="text-white underline font-semibold">OOU Tech Community (OTC)</strong>. Empowering the next generation of university builders and problem solvers across Nigeria.
             </p>
 
             <div className="flex items-center gap-2 text-xs font-mono font-bold text-gray-300 pt-2">
@@ -82,8 +82,12 @@ export const Footer: React.FC = () => {
 
         {/* Bottom copyright & back to top */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-gray-400 font-bold">
-          <div>
-            © 2026 BUILDERS ARENA. Built with <Heart className="w-3.5 h-3.5 inline text-[#00D9FF] fill-[#00D9FF]" /> by OTC Dev Team.
+          <div className="flex items-center gap-3">
+            <span>© 2026 BUILDERS ARENA. Built with <Heart className="w-3.5 h-3.5 inline text-[#00D9FF] fill-[#00D9FF]" /> by OTC Dev Team.</span>
+            <span>•</span>
+            <Link to="/admin" className="text-gray-400 hover:text-[#00D9FF] transition-colors underline">
+              Admin Portal
+            </Link>
           </div>
 
           <button

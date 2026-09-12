@@ -1,7 +1,10 @@
+import React from 'react';
+
 export interface Track {
   id: string;
   name: string;
-  emoji: string;
+  icon: React.ComponentType<{ className?: string; [key: string]: any }>;
+  emoji?: string;
   shortDesc: string;
   fullDesc: string;
   color: string;

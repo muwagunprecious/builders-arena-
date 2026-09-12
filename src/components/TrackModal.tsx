@@ -31,8 +31,8 @@ export const TrackModal: React.FC<TrackModalProps> = ({ track, onClose }) => {
 
           {/* Modal Header */}
           <div className="flex items-center gap-4 mb-6 border-b-3 border-black pb-4">
-            <div className="w-14 h-14 rounded bg-[#00D9FF] border-2 border-black flex items-center justify-center text-3xl">
-              {track.emoji}
+            <div className="w-14 h-14 rounded bg-[#00D9FF] border-2 border-black flex items-center justify-center">
+              <track.icon className="w-8 h-8 text-black stroke-[2.5]" />
             </div>
             <div>
               <span className="neo-tag">
@@ -42,7 +42,7 @@ export const TrackModal: React.FC<TrackModalProps> = ({ track, onClose }) => {
             </div>
           </div>
 
-          <p className="font-sans font-bold text-gray-900 text-base leading-relaxed mb-6">
+          <p className="font-sans font-normal text-gray-800 text-base leading-relaxed mb-6">
             {track.fullDesc}
           </p>
 
@@ -72,8 +72,9 @@ export const TrackModal: React.FC<TrackModalProps> = ({ track, onClose }) => {
             </h4>
             <div className="space-y-2">
               {track.sampleProblems.map((problem, idx) => (
-                <div key={idx} className="p-3 rounded bg-gray-100 border-2 border-black text-black font-sans text-xs sm:text-sm font-semibold shadow-[3px_3px_0px_#000000]">
-                  💡 {problem}
+                <div key={idx} className="p-3 rounded bg-gray-100 border-2 border-black text-black font-sans text-xs sm:text-sm font-normal shadow-[3px_3px_0px_#000000] flex items-start gap-2">
+                  <Lightbulb className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                  <span>{problem}</span>
                 </div>
               ))}
             </div>

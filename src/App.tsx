@@ -9,6 +9,7 @@ import { MentorsPage } from './pages/MentorsPage';
 import { TeamsPage } from './pages/TeamsPage';
 import { FAQPage } from './pages/FAQPage';
 import { SponsorApplyPage } from './pages/SponsorApplyPage';
+import { AdminPage } from './pages/AdminPage';
 
 export const App: React.FC = () => {
   const { pathname } = useLocation();
@@ -28,6 +29,7 @@ export const App: React.FC = () => {
       <Route path="/mentors" element={<MentorsPage />} />
       <Route path="/teams" element={<TeamsPage />} />
       <Route path="/faq" element={<FAQPage />} />
+      <Route path="/admin" element={<AdminPage />} />
     </Routes>
   );
 };

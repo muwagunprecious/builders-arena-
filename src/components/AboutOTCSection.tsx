@@ -39,10 +39,10 @@ export const AboutOTCSection: React.FC = () => {
             </div>
 
             <div className="bg-white text-black border-3 border-black p-6 rounded-md shadow-[6px_6px_0px_#000000] space-y-4">
-              <p className="font-sans font-bold text-base sm:text-lg leading-relaxed">
+              <p className="font-sans font-medium text-base sm:text-lg leading-relaxed">
                 A university technology community bridging the gap between <strong className="underline">academic learning</strong> and <strong className="text-black bg-[#00D9FF] px-1.5 py-0.5 rounded">industry execution</strong>.
               </p>
-              <p className="font-sans font-semibold text-xs sm:text-sm text-gray-900 leading-relaxed">
+              <p className="font-sans font-normal text-xs sm:text-sm text-gray-800 leading-relaxed">
                 OTC empowers hundreds of student developers, designers, and tech innovators at Olabisi Onabanjo University with hands-on bootcamps, open-source mentorship, developer meetups, and high-impact hackathons.
               </p>
             </div>
@@ -81,7 +81,7 @@ export const AboutOTCSection: React.FC = () => {
                 <span className="bg-black text-[#00D9FF] font-mono font-black text-xs px-2 py-1 rounded">01</span>
                 <div>
                   <strong className="text-black block font-display font-black">1,500+ Student Developers Trained</strong>
-                  <span className="text-gray-800 text-xs font-semibold">Conducted hands-on workshops in Web Dev, Mobile, AI & Cloud.</span>
+                  <span className="text-gray-700 text-xs font-normal">Conducted hands-on workshops in Web Dev, Mobile, AI & Cloud.</span>
                 </div>
               </div>
 
@@ -89,7 +89,7 @@ export const AboutOTCSection: React.FC = () => {
                 <span className="bg-black text-[#00D9FF] font-mono font-black text-xs px-2 py-1 rounded">02</span>
                 <div>
                   <strong className="text-black block font-display font-black">Active Campus Developer Hub</strong>
-                  <span className="text-gray-800 text-xs font-semibold">Fostering peer-to-peer technical mentorship and open-source contributions.</span>
+                  <span className="text-gray-700 text-xs font-normal">Fostering peer-to-peer technical mentorship and open-source contributions.</span>
                 </div>
               </div>
 
@@ -97,7 +97,7 @@ export const AboutOTCSection: React.FC = () => {
                 <span className="bg-black text-[#00D9FF] font-mono font-black text-xs px-2 py-1 rounded">03</span>
                 <div>
                   <strong className="text-black block font-display font-black">Startup & Project Incubation</strong>
-                  <span className="text-gray-800 text-xs font-semibold">Guiding student projects into registered tech ventures and internships.</span>
+                  <span className="text-gray-700 text-xs font-normal">Guiding student projects into registered tech ventures and internships.</span>
                 </div>
               </div>
             </div>

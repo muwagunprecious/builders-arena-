@@ -61,7 +61,7 @@ export const FAQSection: React.FC = () => {
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.3 }}
-                      className="px-6 pb-6 text-black font-sans font-semibold text-sm sm:text-base leading-relaxed border-t-2 border-black pt-4 bg-gray-50"
+                      className="px-6 pb-6 text-gray-800 font-sans font-normal text-sm sm:text-base leading-relaxed border-t-2 border-black pt-4 bg-gray-50"
                     >
                       {faq.a}
                     </motion.div>

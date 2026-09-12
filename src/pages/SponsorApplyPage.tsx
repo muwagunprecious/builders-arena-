@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { CustomCursor } from '../components/CustomCursor';
-import { Crown, ArrowLeft, ArrowRight, Building, Mail, Phone, Globe, CheckCircle2, ShieldCheck, DollarSign } from 'lucide-react';
+import { Crown, ArrowLeft, ArrowRight, Building, Mail, Phone, Globe, CheckCircle2, ShieldCheck, DollarSign, AlertTriangle } from 'lucide-react';
 
 interface SponsorFormData {
   companyName: string;
@@ -20,6 +20,10 @@ interface SponsorFormData {
 
 export const SponsorApplyPage: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [proposalRecord, setProposalRecord] = useState<any>(null);
+
   const [formData, setFormData] = useState<SponsorFormData>({
     companyName: '',
     companyWebsite: '',
@@ -46,10 +50,43 @@ export const SponsorApplyPage: React.FC = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch('/api/sponsor-apply', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          companyName: formData.companyName,
+          tier: formData.tier,
+          contactName: formData.contactName,
+          contactEmail: formData.contactEmail,
+          contactPhone: formData.contactPhone,
+          companyWebsite: formData.companyWebsite,
+          industry: formData.industry,
+          sponsorshipGoals: formData.notes,
+          participationTypes: formData.contributionType,
+          customRequests: formData.notes,
+        }),
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to submit sponsorship application.');
+      }
+
+      setProposalRecord(data.proposal);
+      setSubmitted(true);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (err: any) {
+      console.error('Sponsorship submit error:', err);
+      setError(err.message || 'Network error occurred while submitting.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const getTierPrice = (tier: string) => {
@@ -95,7 +132,7 @@ export const SponsorApplyPage: React.FC = () => {
             </h1>
           </div>
 
-          <p className="font-sans font-bold text-sm sm:text-base text-white bg-black px-6 py-2.5 rounded-md border-2 border-black shadow-[4px_4px_0px_#000000]">
+          <p className="font-sans font-medium text-sm sm:text-base text-white bg-black px-6 py-2.5 rounded-md border-2 border-black shadow-[4px_4px_0px_#000000]">
             Partner with OOU Tech Community to empower 75+ top student developers building real Nigerian tech solutions.
           </p>
         </div>
@@ -107,40 +144,44 @@ export const SponsorApplyPage: React.FC = () => {
             animate={{ opacity: 1, scale: 1 }}
             className="bg-white text-black border-3 border-black rounded-md p-8 sm:p-12 text-center space-y-6 shadow-[12px_12px_0px_#000000]"
           >
-            <div className="w-20 h-20 rounded bg-[#00D9FF] border-3 border-black text-black flex items-center justify-center mx-auto text-4xl font-black shadow-[4px_4px_0px_#000000]">
-              👑
+            <div className="w-20 h-20 rounded bg-[#00D9FF] border-3 border-black text-black flex items-center justify-center mx-auto shadow-[4px_4px_0px_#000000]">
+              <Crown className="w-10 h-10 text-black fill-black" />
             </div>
 
             <h2 className="font-display font-black text-3xl sm:text-5xl uppercase tracking-tight text-black">
               SPONSORSHIP PROPOSAL RECEIVED!
             </h2>
 
-            <p className="font-sans font-bold text-base sm:text-lg text-gray-900 max-w-xl mx-auto leading-relaxed">
-              Thank you for partnering with <strong className="text-black bg-[#00D9FF] px-1.5 py-0.5 rounded border border-black">BUILDERS ARENA 2026</strong>. We have received the sponsorship application for <strong className="text-black underline">{formData.companyName || 'Your Brand'}</strong> under the <strong className="text-black uppercase font-black">{formData.tier} TIER ({getTierPrice(formData.tier)})</strong>.
+            <p className="font-sans font-normal text-base sm:text-lg text-gray-800 max-w-xl mx-auto leading-relaxed">
+              Thank you for partnering with <strong className="text-black bg-[#00D9FF] px-1.5 py-0.5 rounded border border-black font-semibold">BUILDERS ARENA 2026</strong>. We have received the sponsorship application for <strong className="text-black underline font-semibold">{formData.companyName || 'Your Brand'}</strong> under the <strong className="text-black uppercase font-semibold">{formData.tier} TIER ({getTierPrice(formData.tier)})</strong>.
             </p>
 
             {/* RECEIPT SLIP */}
             <div className="p-6 rounded bg-gray-50 border-3 border-black text-left max-w-lg mx-auto font-mono text-xs space-y-3 shadow-[6px_6px_0px_#000000]">
               <div className="flex justify-between border-b-2 border-black pb-2">
-                <span className="text-gray-600 font-bold">PROPOSAL ID:</span>
-                <span className="text-black font-black bg-[#00D9FF] px-2 py-0.5 rounded border border-black">BA2026-SPONSOR-{(Math.random() * 8999 + 1000).toFixed(0)}</span>
+                <span className="text-gray-600 font-medium">PROPOSAL ID:</span>
+                <span className="text-black font-bold bg-[#00D9FF] px-2 py-0.5 rounded border border-black">
+                  {proposalRecord?.proposal_id || 'BA2026-SPONSOR-PROCESSED'}
+                </span>
               </div>
               <div className="flex justify-between border-b-2 border-black pb-2">
-                <span className="text-gray-600 font-bold">PRIMARY CONTACT:</span>
-                <span className="text-black font-bold">{formData.contactName}</span>
+                <span className="text-gray-600 font-medium">PRIMARY CONTACT:</span>
+                <span className="text-black font-semibold">{formData.contactName}</span>
               </div>
               <div className="flex justify-between border-b-2 border-black pb-2">
-                <span className="text-gray-600 font-bold">TIER SELECTION:</span>
-                <span className="text-black font-black uppercase">{formData.tier} ({getTierPrice(formData.tier)})</span>
+                <span className="text-gray-600 font-medium">TIER SELECTION:</span>
+                <span className="text-black font-bold uppercase">{formData.tier} ({getTierPrice(formData.tier)})</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600 font-bold">PARTNERSHIP STATUS:</span>
-                <span className="bg-black text-[#00D9FF] px-2 py-0.5 rounded font-black">OTC TEAM CONNECTING WITHIN 24H</span>
+                <span className="text-gray-600 font-medium">PARTNERSHIP STATUS:</span>
+                <span className="bg-black text-[#00D9FF] px-2 py-0.5 rounded font-bold uppercase">
+                  {proposalRecord?.status ? proposalRecord.status.replace('_', ' ') : 'UNDER REVIEW'}
+                </span>
               </div>
             </div>
 
-            <p className="text-xs text-gray-700 font-sans font-semibold">
-              Our sponsorship desk will reach out to <strong className="text-black underline">{formData.contactEmail}</strong> ({formData.contactPhone}) with full pitch deck details and MOU documentation.
+            <p className="text-xs text-gray-700 font-sans font-normal">
+              Our sponsorship desk will reach out to <strong className="text-black underline font-semibold">{formData.contactEmail}</strong> ({formData.contactPhone}) with full pitch deck details and MOU documentation.
             </p>
 
             <div className="pt-4 flex flex-col sm:flex-row gap-4 justify-center">
@@ -148,19 +189,25 @@ export const SponsorApplyPage: React.FC = () => {
                 to="/"
                 className="neo-btn-primary px-8 py-3.5 text-xs font-display uppercase tracking-wider"
               >
-                RETURN TO HOME
+                RETURN HOME
               </Link>
               <button
                 onClick={() => setSubmitted(false)}
                 className="neo-btn-secondary px-8 py-3.5 text-xs font-mono uppercase font-bold"
               >
-                EDIT APPLICATION
+                SUBMIT ANOTHER PROPOSAL
               </button>
             </div>
           </motion.div>
         ) : (
-          /* NEO-BRUTALIST FORM */
+          /* NEO-BRUTALIST SPONSORSHIP APPLICATION FORM */
           <form onSubmit={handleSubmit} className="space-y-8">
+            {error && (
+              <div className="p-4 rounded bg-red-100 border-3 border-black text-red-800 font-mono text-xs shadow-[4px_4px_0px_#000000] flex items-center gap-2">
+                <AlertTriangle className="w-4 h-4 text-red-700 shrink-0" />
+                <span>{error}</span>
+              </div>
+            )}
             
             {/* Step 1: Sponsorship Package Selection */}
             <div className="bg-white text-black border-3 border-black rounded-md p-6 sm:p-8 space-y-6 shadow-[8px_8px_0px_#000000]">
@@ -233,7 +280,7 @@ export const SponsorApplyPage: React.FC = () => {
                     placeholder="https://yourcompany.com"
                     value={formData.companyWebsite}
                     onChange={(e) => setFormData({ ...formData, companyWebsite: e.target.value })}
-                    className="w-full bg-white border-2 border-black rounded p-3 text-black font-mono text-sm font-bold focus:shadow-[4px_4px_0px_#000000] focus:outline-none transition-all"
+                    className="w-full bg-white border-2 border-black rounded p-3 text-black font-mono text-sm font-normal focus:shadow-[4px_4px_0px_#000000] focus:outline-none transition-all"
                   />
                 </div>
 
@@ -244,7 +291,7 @@ export const SponsorApplyPage: React.FC = () => {
                   <select
                     value={formData.industry}
                     onChange={(e) => setFormData({ ...formData, industry: e.target.value })}
-                    className="w-full bg-white border-2 border-black rounded p-3 text-black font-mono text-sm font-bold focus:shadow-[4px_4px_0px_#000000] focus:outline-none transition-all"
+                    className="w-full bg-white border-2 border-black rounded p-3 text-black font-mono text-sm font-normal focus:shadow-[4px_4px_0px_#000000] focus:outline-none transition-all"
                   >
                     <option value="Fintech">Fintech & Payments</option>
                     <option value="Agritech">Agritech & Supply Chain</option>
@@ -312,7 +359,7 @@ export const SponsorApplyPage: React.FC = () => {
                   How would your organization like to participate? (Select all that apply)
                 </label>
                 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-xs font-bold">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-xs font-medium">
                   {[
                     'Financial Sponsorship',
                     'API / SDK Technical Integration',
@@ -358,10 +405,13 @@ export const SponsorApplyPage: React.FC = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full neo-btn-primary py-5 px-8 text-center text-sm sm:text-base font-display uppercase tracking-wider flex items-center justify-center gap-2"
+              disabled={loading}
+              className={`w-full neo-btn-primary py-5 px-8 text-center text-sm sm:text-base font-display uppercase tracking-wider flex items-center justify-center gap-2 ${
+                loading ? 'opacity-70 cursor-not-allowed' : ''
+              }`}
             >
               <Crown className="w-5 h-5 text-black fill-black" />
-              <span>SUBMIT SPONSORSHIP PROPOSAL</span>
+              <span>{loading ? 'SUBMITTING TO NEON DATABASE...' : 'SUBMIT SPONSORSHIP PROPOSAL'}</span>
               <ArrowRight className="w-5 h-5" />
             </button>
           </form>
